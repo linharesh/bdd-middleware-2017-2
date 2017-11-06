@@ -1,0 +1,12 @@
+{
+    "Entity": {
+        "name":"Aluno",
+        "primarykey": "matricula",
+        "attributes": [
+            "matricula",
+            "idade",
+            "cr"
+        ]
+    }
+
+}
