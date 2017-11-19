@@ -1,12 +1,13 @@
 {
-    "Entity": {
-        "name":"Aluno",
-        "primarykey": "matricula",
-        "attributes": [
-            "matricula",
-            "idade",
-            "cr"
-        ]
-    }
+    "Entities":[
+        {
+            "name":"Aluno",
+            "fragments": [
+                "aluno1",
+                "aluno2",
+                "aluno3"
+            ]
+        }
 
+    ]
 }
