@@ -1,0 +1,22 @@
+{
+    "Sites":[
+        {
+            "ID":"SITE-01",
+            "URL": "jdbc:mysql://localhost:3306/SITE-01",
+            "USERNAME": "root",
+            "PASSWORD": "root"
+        },
+        {
+            "ID":"SITE-02",
+            "URL": "jdbc:mysql://localhost:3306/SITE-02",
+            "USERNAME": "root",
+            "PASSWORD": "root"
+        },
+        {
+            "ID":"SITE-03",
+            "URL": "jdbc:mysql://localhost:3306/SITE-03",
+            "USERNAME": "root",
+            "PASSWORD": "root"
+        }
+    ]
+}

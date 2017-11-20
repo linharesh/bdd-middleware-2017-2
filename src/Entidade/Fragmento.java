@@ -1,12 +1,14 @@
 package Entidade;
 
 public class Fragmento {
-	
-	private String nome;
 
-	public Fragmento(String nome) {
+	private String nome;
+	private String siteid;
+
+	public Fragmento(String nome, String siteid) {
 		super();
 		this.nome = nome;
+		this.siteid = siteid;
 	}
 
 	public String getNome() {
@@ -16,6 +18,13 @@ public class Fragmento {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
+	public String getSiteid() {
+		return siteid;
+	}
+
+	public void setSiteid(String siteid) {
+		this.siteid = siteid;
+	}
 
 }

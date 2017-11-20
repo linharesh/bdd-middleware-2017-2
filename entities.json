@@ -3,9 +3,36 @@
         {
             "name":"Aluno",
             "fragments": [
-                "aluno1",
-                "aluno2",
-                "aluno3"
+                {
+                    "name": "ALUNO1",
+                    "site-id": "SITE-01"
+                },
+                {
+                    "name": "ALUNO2",
+                    "site-id": "SITE-02"
+                },
+                {
+                    "name": "ALUNO3",
+                    "site-id": "SITE-03"
+                }
+            ]
+        },
+
+        {
+            "name":"Disciplina",
+            "fragments": [
+                {
+                    "name": "DISCIPLINA1",
+                    "site-id": "SITE-01"
+                },
+                {
+                    "name": "DISCIPLINA2",
+                    "site-id": "SITE-02"
+                },
+                {
+                    "name": "DISCIPLINA3",
+                    "site-id": "SITE-03"
+                }
             ]
         }
 
