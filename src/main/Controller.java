@@ -1,13 +1,14 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import Entidade.Entidade;
 import Entidade.Fragmento;
 import dbconnection.MySQLConnection;
 import dbconnection.Site;
-import fileInterface.JSONReader;
+import filereader.JSONFileParser;
 
 public class Controller {
 
@@ -18,7 +19,7 @@ public class Controller {
 	private Scanner scanner = new Scanner(System.in);
 
 	public void inicializaApp() {
-		JSONReader jsonReader = new JSONReader();
+		JSONFileParser jsonReader = new JSONFileParser();
 		this.entidades = jsonReader.lerArquivoEntities();
 		this.sites = jsonReader.lerArquivoSites();
 		inicializaConexoes();
@@ -42,20 +43,18 @@ public class Controller {
 
 	public void leLinhaConsole() {
 		System.out.print("& ");
-		String line = scanner.nextLine().toUpperCase(); //.replaceAll(" ", "");
-		if (line.equals("EXIT")) {
-			finalizaApp();
-		} else {
+		String line = scanner.nextLine().toUpperCase();
+		while (!line.equals("EXIT")) {
 			try {
 				processaQuery(line);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				leLinhaConsole();				
+				System.out.print("& ");
+				line = scanner.nextLine().toUpperCase();
 			}
 		}
-
+		finalizaApp();
 	}
 
 	private void processaQuery(String query) throws Exception {
@@ -65,13 +64,56 @@ public class Controller {
 		System.out.println("Processando consulta: " + query);
 		query = query.replaceAll(";", "");
 		String afterFROM = query.split("FROM")[1];
-		String entities = afterFROM.split("WHERE")[0].replaceAll(" ", "");
-		if (entities.contains(",")) {
+		String beforeWhere = afterFROM.split("WHERE")[0]; // .replaceAll(" ", "");
+		if (beforeWhere.contains(",") || beforeWhere.contains("JOIN")) {
 			// Mais de uma entidade
-			throw new Exception("Funcao ainda nao suportada ");
+			ArrayList<String> nomeDasEntidades = null;
+			if (beforeWhere.contains(",")) {
+				nomeDasEntidades = new ArrayList<String>(Arrays.asList(beforeWhere.replaceAll(" ", "").split(",")));
+			} else if (beforeWhere.contains("JOIN")) {
+				nomeDasEntidades = new ArrayList<String>();
+				String[] splitQuery = beforeWhere.split("JOIN");
+				for (int k = 0; k < splitQuery.length; k++) {
+					if (splitQuery[k].contains(" ON ")) {
+						nomeDasEntidades.add(splitQuery[k].split(" ON ")[0].replaceAll(" ", ""));
+					} else {
+						nomeDasEntidades.add(splitQuery[k].replaceAll(" ", ""));
+					}
+				}
+			}
+
+			ArrayList<Entidade> entidadesArrL = new ArrayList<Entidade>();
+
+			for (String nomeEntidade : nomeDasEntidades) {
+				entidadesArrL.add(buscaEntidadePorNome(nomeEntidade));
+			}
+
+			ArrayList<Site> sitesInQuery = new ArrayList<Site>();
+
+			for (Entidade ent : entidadesArrL) {
+				for (Fragmento frag : ent.getFragmentos()) {
+					Site site = buscaSitePorSiteId(frag.getSiteid());
+					if (!sitesInQuery.contains(site))
+						sitesInQuery.add(site);
+				}
+			}
+
+			for (Site site : sitesInQuery) {
+				String qqueryPart = query;
+				for (Entidade e : entidadesArrL) {
+					for (Fragmento frag : e.getFragmentos()) {
+						if (site.getId().equalsIgnoreCase(frag.getSiteid()))
+							qqueryPart = qqueryPart.replaceAll(e.getNome().toUpperCase(), frag.getNome().toUpperCase());
+					}
+				}
+				MySQLConnection mysqlcnn = buscaConexaoPorSiteId(site.getId());
+				mysqlcnn.runQuery(qqueryPart + ";");
+			}
+
 		} else {
+			beforeWhere = beforeWhere.replace(" ", "");
 			// Apenas uma entidade
-			Entidade e = buscaEntidadePorNome(entities);
+			Entidade e = buscaEntidadePorNome(beforeWhere);
 			ArrayList<Fragmento> frags = e.getFragmentos();
 			for (Fragmento frag : frags) {
 				MySQLConnection mysqlcnn = buscaConexaoPorSiteId(frag.getSiteid());
@@ -86,15 +128,23 @@ public class Controller {
 			if (e.getNome().equalsIgnoreCase(nome))
 				return e;
 		}
-		throw new Exception("Entidade desconhecida: "+nome);
+		throw new Exception("Entidade desconhecida: " + nome);
 	}
-	
+
 	private MySQLConnection buscaConexaoPorSiteId(String id) throws Exception {
 		for (MySQLConnection msc : connections) {
 			if (msc.getSite().getId().equalsIgnoreCase(id))
 				return msc;
 		}
-		throw new Exception("Site desconhecido: "+id);
+		throw new Exception("Site desconhecido: " + id);
+	}
+
+	private Site buscaSitePorSiteId(String id) throws Exception {
+		for (Site site : this.sites) {
+			if (site.getId().equalsIgnoreCase(id))
+				return site;
+		}
+		throw new Exception("Site desconhecido: " + id);
 	}
 
 	private void inicializaConexoes() {

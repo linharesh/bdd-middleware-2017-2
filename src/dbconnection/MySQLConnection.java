@@ -68,19 +68,7 @@ public class MySQLConnection extends DBConnection {
 				System.out.println();
 			
 			}
-			/*
-			 * while (rs.next()) {
-			 * 
-			 * int id = rs.getInt("id"); String firstName = rs.getString("first_name");
-			 * String lastName = rs.getString("last_name"); Date dateCreated =
-			 * rs.getDate("date_created"); boolean isAdmin = rs.getBoolean("is_admin"); int
-			 * numPoints = rs.getInt("num_points");
-			 * System.out.format("%s, %s, %s, %s, %s, %s\n", id, firstName, lastName,
-			 * dateCreated, isAdmin, numPoints);
-			 * 
-			 * }
-			 */
-
+			
 			st.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");

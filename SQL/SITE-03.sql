@@ -38,19 +38,19 @@ ENGINE = InnoDB;
 -- Table `SITE-03`.`Inscricao3`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SITE-03`.`Inscricao3` (
-  `ALUNO_ID` INT NOT NULL,
-  `DISCIPLINA_ID` INT NOT NULL,
+  `ID_ALN` INT NOT NULL,
+  `ID_DSCPLN` INT NOT NULL,
   `DATA` DATETIME NOT NULL,
-  PRIMARY KEY (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`),
-  INDEX `fk_DisciplinaCursada_Aluno_idx` (`ALUNO_ID` ASC),
-  INDEX `fk_Inscricao_Disciplina3_idx` (`DISCIPLINA_ID` ASC),
+  PRIMARY KEY (`ID_ALN`, `ID_DSCPLN`, `DATA`),
+  INDEX `fk_DisciplinaCursada_ID_ALNx` (`ID_ALN` ASC),
+  INDEX `fk_Inscricao_Disciplina3_idx` (`ID_DSCPLN` ASC),
   CONSTRAINT `fk_DisciplinaCursada_Aluno`
-    FOREIGN KEY (`ALUNO_ID`)
+    FOREIGN KEY (`ID_ALN`)
     REFERENCES `SITE-03`.`Aluno3` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Inscricao_Disciplina3`
-    FOREIGN KEY (`DISCIPLINA_ID`)
+    FOREIGN KEY (`ID_DSCPLN`)
     REFERENCES `SITE-03`.`Disciplina3` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -73,6 +73,6 @@ INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (700,
 INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (800, '200', 'Inteligência Artificial');
 INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (900, '175', 'Engenharia de Software');
 
-INSERT INTO `SITE-03`.`Inscricao3` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (7, 700, '2007-12-22');
-INSERT INTO `SITE-03`.`Inscricao3` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (8, 800, '2009-06-01');
-INSERT INTO `SITE-03`.`Inscricao3` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (9, 900, '2002-12-27');
+INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (7, 700, '2007-12-22');
+INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (8, 800, '2009-06-01');
+INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (9, 900, '2002-12-27');

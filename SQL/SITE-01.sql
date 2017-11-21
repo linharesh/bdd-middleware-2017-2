@@ -38,19 +38,19 @@ ENGINE = InnoDB;
 -- Table `SITE-01`.`Inscricao1`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SITE-01`.`Inscricao1` (
-  `ALUNO_ID` INT NOT NULL,
-  `DISCIPLINA_ID` INT NOT NULL,
+  `ID_ALN` INT NOT NULL,
+  `ID_DSCPLN` INT NOT NULL,
   `DATA` DATETIME NOT NULL,
-  PRIMARY KEY (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`),
-  INDEX `fk_DisciplinaCursada_Aluno_idx` (`ALUNO_ID` ASC),
-  INDEX `fk_Inscricao_Disciplina1_idx` (`DISCIPLINA_ID` ASC),
+  PRIMARY KEY (`ID_ALN`, `ID_DSCPLN`, `DATA`),
+  INDEX `fk_DisciplinaCursada_ID_ALNx` (`ID_ALN` ASC),
+  INDEX `fk_Inscricao_Disciplina1_idx` (`ID_DSCPLN` ASC),
   CONSTRAINT `fk_DisciplinaCursada_Aluno`
-    FOREIGN KEY (`ALUNO_ID`)
+    FOREIGN KEY (`ID_ALN`)
     REFERENCES `SITE-01`.`Aluno1` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Inscricao_Disciplina1`
-    FOREIGN KEY (`DISCIPLINA_ID`)
+    FOREIGN KEY (`ID_DSCPLN`)
     REFERENCES `SITE-01`.`Disciplina1` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -74,6 +74,6 @@ INSERT INTO `SITE-01`.`Disciplina1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (100,
 INSERT INTO `SITE-01`.`Disciplina1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (200, '200', 'Algoritmos em C');
 INSERT INTO `SITE-01`.`Disciplina1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (300, '175', 'Banco de dados Distribuidos');
 
-INSERT INTO `SITE-01`.`Inscricao1` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (1, 100, '2006-12-17');
-INSERT INTO `SITE-01`.`Inscricao1` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (2, 200, '2008-06-05');
-INSERT INTO `SITE-01`.`Inscricao1` (`ALUNO_ID`, `DISCIPLINA_ID`, `DATA`) VALUES (3, 300, '2005-12-15');
+INSERT INTO `SITE-01`.`Inscricao1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (1, 100, '2006-12-17');
+INSERT INTO `SITE-01`.`Inscricao1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (2, 200, '2008-06-05');
+INSERT INTO `SITE-01`.`Inscricao1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (3, 300, '2005-12-15');

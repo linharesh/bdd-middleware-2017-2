@@ -34,7 +34,24 @@
                     "site-id": "SITE-03"
                 }
             ]
-        }
+        }, 
 
+        {
+            "name":"Inscricao",
+            "fragments": [
+                {
+                    "name": "INSCRICAO1",
+                    "site-id": "SITE-01"
+                },
+                {
+                    "name": "INSCRICAO2",
+                    "site-id": "SITE-02"
+                },
+                {
+                    "name": "INSCRICAO3",
+                    "site-id": "SITE-03"
+                }
+            ]
+        }
     ]
 }

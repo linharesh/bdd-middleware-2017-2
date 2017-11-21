@@ -1,4 +1,4 @@
-package fileInterface;
+package filereader;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import Entidade.Entidade;
 import Entidade.Fragmento;
 import dbconnection.Site;
 
-public class JSONReader {
+public class JSONFileParser extends FileParser {
 
 	public ArrayList<Entidade> lerArquivoEntities() {
 
@@ -19,7 +19,7 @@ public class JSONReader {
 		JSONParser parser = new JSONParser();
 		System.out.println("Lendo entidades..");
 		try {
-			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("entities.json"));
+			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(this.PATH_PARA_ARQUIVO_ENTITIES));
 			JSONArray entities = (JSONArray) jsonObject.get("Entities");
 			for (Object e : entities) {
 				JSONObject entity = (JSONObject) e;
@@ -52,7 +52,7 @@ public class JSONReader {
 		JSONParser parser = new JSONParser();
 		System.out.println("Lendo sites..");
 		try {
-			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("sites.json"));
+			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(this.PATH_PARA_ARQUIVO_SITES));
 			JSONArray sitesJson = (JSONArray) jsonObject.get("Sites");
 			for (Object s : sitesJson) {
 				JSONObject site = (JSONObject) s;
