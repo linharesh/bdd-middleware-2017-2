@@ -10,9 +10,9 @@ CREATE SCHEMA IF NOT EXISTS `SITE-03` DEFAULT CHARACTER SET utf8 ;
 USE `SITE-03` ;
 
 -- -----------------------------------------------------
--- Table `SITE-03`.`Aluno3`
+-- Table `SITE-03`.`ALUNO3`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SITE-03`.`Aluno3` (
+CREATE TABLE IF NOT EXISTS `SITE-03`.`ALUNO3` (
   `ID` INT NOT NULL,
   `MATRICULA` VARCHAR(45) NOT NULL,
   `NOME` VARCHAR(45) NOT NULL,
@@ -24,9 +24,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SITE-03`.`Disciplina3`
+-- Table `SITE-03`.`DISCIPLINA3`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SITE-03`.`Disciplina3` (
+CREATE TABLE IF NOT EXISTS `SITE-03`.`DISCIPLINA3` (
   `ID` INT NOT NULL,
   `CARGA_HORARIA` VARCHAR(45) NOT NULL,
   `NOME` VARCHAR(45) NOT NULL,
@@ -35,9 +35,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SITE-03`.`Inscricao3`
+-- Table `SITE-03`.`INSCRICAO3`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SITE-03`.`Inscricao3` (
+CREATE TABLE IF NOT EXISTS `SITE-03`.`INSCRICAO3` (
   `ID_ALN` INT NOT NULL,
   `ID_DSCPLN` INT NOT NULL,
   `DATA` DATETIME NOT NULL,
@@ -46,12 +46,12 @@ CREATE TABLE IF NOT EXISTS `SITE-03`.`Inscricao3` (
   INDEX `fk_Inscricao_Disciplina3_idx` (`ID_DSCPLN` ASC),
   CONSTRAINT `fk_DisciplinaCursada_Aluno`
     FOREIGN KEY (`ID_ALN`)
-    REFERENCES `SITE-03`.`Aluno3` (`ID`)
+    REFERENCES `SITE-03`.`ALUNO3` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Inscricao_Disciplina3`
     FOREIGN KEY (`ID_DSCPLN`)
-    REFERENCES `SITE-03`.`Disciplina3` (`ID`)
+    REFERENCES `SITE-03`.`DISCIPLINA3` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -69,10 +69,10 @@ INSERT INTO `SITE-03`.`ALUNO3` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `C
 INSERT INTO `SITE-03`.`ALUNO3` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (8, 8, "Felipe Rocha", 25, "TO", 6.57);
 INSERT INTO `SITE-03`.`ALUNO3` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (9, 9, "Beatriz Azevedo", 19, "SC", 8.71);
 
-INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (700, '120', 'Sistemas Distribuidos');
-INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (800, '200', 'Inteligência Artificial');
-INSERT INTO `SITE-03`.`Disciplina3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (900, '175', 'Engenharia de Software');
+INSERT INTO `SITE-03`.`DISCIPLINA3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (700, '120', 'Sistemas Distribuidos');
+INSERT INTO `SITE-03`.`DISCIPLINA3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (800, '200', 'Inteligência Artificial');
+INSERT INTO `SITE-03`.`DISCIPLINA3` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (900, '175', 'Engenharia de Software');
 
-INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (7, 700, '2007-12-22');
-INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (8, 800, '2009-06-01');
-INSERT INTO `SITE-03`.`Inscricao3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (9, 900, '2002-12-27');
+INSERT INTO `SITE-03`.`INSCRICAO3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (7, 700, '2007-12-22');
+INSERT INTO `SITE-03`.`INSCRICAO3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (8, 800, '2009-06-01');
+INSERT INTO `SITE-03`.`INSCRICAO3` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (9, 900, '2002-12-27');

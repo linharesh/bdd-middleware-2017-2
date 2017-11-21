@@ -1,12 +1,13 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.Set;
 
 import Entidade.Entidade;
-import Entidade.Fragmento;
 import dbconnection.MySQLConnection;
+import dbconnection.ProcessadorDeConsulta;
 import dbconnection.Site;
 import filereader.JSONFileParser;
 
@@ -58,91 +59,20 @@ public class Controller {
 	}
 
 	private void processaQuery(String query) throws Exception {
-		if (query.isEmpty()) {
-			throw new Exception("Query vazia");
+		ProcessadorDeConsulta processador = new ProcessadorDeConsulta(entidades, sites);
+		Hashtable<String, Site> subconsultas = processador.processarConsulta(query);
+		Set<String> keys = subconsultas.keySet();
+		for (String subconsulta : keys) {
+			Site site = subconsultas.get(subconsulta);
+			MySQLConnection conn = buscaConexaoPorSiteId(site.getId());
+			conn.runQuery(subconsulta);
 		}
-		System.out.println("Processando consulta: " + query);
-		query = query.replaceAll(";", "");
-		String afterFROM = query.split("FROM")[1];
-		String beforeWhere = afterFROM.split("WHERE")[0]; // .replaceAll(" ", "");
-		if (beforeWhere.contains(",") || beforeWhere.contains("JOIN")) {
-			// Mais de uma entidade
-			ArrayList<String> nomeDasEntidades = null;
-			if (beforeWhere.contains(",")) {
-				nomeDasEntidades = new ArrayList<String>(Arrays.asList(beforeWhere.replaceAll(" ", "").split(",")));
-			} else if (beforeWhere.contains("JOIN")) {
-				nomeDasEntidades = new ArrayList<String>();
-				String[] splitQuery = beforeWhere.split("JOIN");
-				for (int k = 0; k < splitQuery.length; k++) {
-					if (splitQuery[k].contains(" ON ")) {
-						nomeDasEntidades.add(splitQuery[k].split(" ON ")[0].replaceAll(" ", ""));
-					} else {
-						nomeDasEntidades.add(splitQuery[k].replaceAll(" ", ""));
-					}
-				}
-			}
-
-			ArrayList<Entidade> entidadesArrL = new ArrayList<Entidade>();
-
-			for (String nomeEntidade : nomeDasEntidades) {
-				entidadesArrL.add(buscaEntidadePorNome(nomeEntidade));
-			}
-
-			ArrayList<Site> sitesInQuery = new ArrayList<Site>();
-
-			for (Entidade ent : entidadesArrL) {
-				for (Fragmento frag : ent.getFragmentos()) {
-					Site site = buscaSitePorSiteId(frag.getSiteid());
-					if (!sitesInQuery.contains(site))
-						sitesInQuery.add(site);
-				}
-			}
-
-			for (Site site : sitesInQuery) {
-				String qqueryPart = query;
-				for (Entidade e : entidadesArrL) {
-					for (Fragmento frag : e.getFragmentos()) {
-						if (site.getId().equalsIgnoreCase(frag.getSiteid()))
-							qqueryPart = qqueryPart.replaceAll(e.getNome().toUpperCase(), frag.getNome().toUpperCase());
-					}
-				}
-				MySQLConnection mysqlcnn = buscaConexaoPorSiteId(site.getId());
-				mysqlcnn.runQuery(qqueryPart + ";");
-			}
-
-		} else {
-			beforeWhere = beforeWhere.replace(" ", "");
-			// Apenas uma entidade
-			Entidade e = buscaEntidadePorNome(beforeWhere);
-			ArrayList<Fragmento> frags = e.getFragmentos();
-			for (Fragmento frag : frags) {
-				MySQLConnection mysqlcnn = buscaConexaoPorSiteId(frag.getSiteid());
-				mysqlcnn.runQuery(query.replaceAll(e.getNome().toUpperCase(), frag.getNome().toUpperCase()) + ";");
-			}
-
-		}
-	}
-
-	private Entidade buscaEntidadePorNome(String nome) throws Exception {
-		for (Entidade e : entidades) {
-			if (e.getNome().equalsIgnoreCase(nome))
-				return e;
-		}
-		throw new Exception("Entidade desconhecida: " + nome);
 	}
 
 	private MySQLConnection buscaConexaoPorSiteId(String id) throws Exception {
 		for (MySQLConnection msc : connections) {
 			if (msc.getSite().getId().equalsIgnoreCase(id))
 				return msc;
-		}
-		throw new Exception("Site desconhecido: " + id);
-	}
-
-	private Site buscaSitePorSiteId(String id) throws Exception {
-		for (Site site : this.sites) {
-			if (site.getId().equalsIgnoreCase(id))
-				return site;
 		}
 		throw new Exception("Site desconhecido: " + id);
 	}

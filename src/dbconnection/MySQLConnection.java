@@ -11,23 +11,7 @@ import java.util.Properties;
 public class MySQLConnection extends DBConnection {
 
 	public MySQLConnection(Site site) {
-		this.site = site;
-	}
-
-	private Site site;
-
-	private String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-
-	private Connection connection;
-	private Properties properties;
-
-	private Properties getProperties() {
-		if (properties == null) {
-			properties = new Properties();
-			properties.setProperty("user", this.site.getUsername());
-			properties.setProperty("password", this.site.getPassword());
-		}
-		return properties;
+		super(site);
 	}
 
 	public Connection connect() {
@@ -87,6 +71,15 @@ public class MySQLConnection extends DBConnection {
 
 	public Site getSite() {
 		return this.site;
+	}
+
+	private Properties getProperties() {
+		if (properties == null) {
+			properties = new Properties();
+			properties.setProperty("user", this.site.getUsername());
+			properties.setProperty("password", this.site.getPassword());
+		}
+		return properties;
 	}
 
 }
