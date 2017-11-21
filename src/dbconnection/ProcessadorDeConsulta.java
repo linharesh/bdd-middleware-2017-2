@@ -41,21 +41,11 @@ public class ProcessadorDeConsulta {
 			for (Entidade e : entidadesNaConsulta) {
 				for (Fragmento frag : e.getFragmentos()) {
 					if (site.getId().equalsIgnoreCase(frag.getSiteid())) {
-						//System.out.println("#####");
-						//System.out.println("ANTES: " + queryPart);
-
-						//String[] splits = queryPart.split(" ");
-						//for (String s : splits) {
-						//	System.out.println(s);
-						//}
-						
 						queryPart = queryPart.replaceAll(e.getNome().toUpperCase(), frag.getNome().toUpperCase());
-						System.out.println(queryPart);
-						//System.out.println("DEPOIS: " + queryPart);
-						
 					}
 				}
 			}
+			System.out.println(queryPart);
 			subconsultas.put(queryPart, site);
 		}
 		return subconsultas;
