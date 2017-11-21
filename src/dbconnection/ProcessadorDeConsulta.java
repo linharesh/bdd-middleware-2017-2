@@ -37,7 +37,7 @@ public class ProcessadorDeConsulta {
 		}
 
 		for (Site site : sitesNaConsulta) {
-			String queryPart = query;
+			String queryPart = query; //.replaceAll(",", ", ");
 			for (Entidade e : entidadesNaConsulta) {
 				for (Fragmento frag : e.getFragmentos()) {
 					if (site.getId().equalsIgnoreCase(frag.getSiteid())) {
