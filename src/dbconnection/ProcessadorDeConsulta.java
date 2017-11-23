@@ -52,6 +52,7 @@ public class ProcessadorDeConsulta {
 	}
 
 	private ArrayList<Entidade> extrairEntidadesDeConsulta(String query) throws Exception {
+		query = query.replaceAll(";", "");
 		ArrayList<Entidade> entidadesArrL = new ArrayList<Entidade>();
 		String afterFrom = query.split("FROM")[1];
 		String beforeWhere = afterFrom.split("WHERE")[0];
@@ -73,6 +74,7 @@ public class ProcessadorDeConsulta {
 			}
 
 			for (String nomeEntidade : nomeDasEntidades) {
+				System.out.println("buscando por:"+nomeEntidade);
 				entidadesArrL.add(buscaEntidadePorNome(nomeEntidade));
 			}
 			return entidadesArrL;
@@ -92,7 +94,7 @@ public class ProcessadorDeConsulta {
 			if (e.getNome().equalsIgnoreCase(nome))
 				return e;
 		}
-		throw new Exception("Entidade desconhecida: " + nome);
+		throw new Exception("Entidade desconhecida:" + nome);
 	}
 
 	private Site buscaSitePorSiteId(String id) throws Exception {
@@ -100,7 +102,7 @@ public class ProcessadorDeConsulta {
 			if (site.getId().equalsIgnoreCase(id))
 				return site;
 		}
-		throw new Exception("Site desconhecido: " + id);
+		throw new Exception("Site desconhecido:" + id);
 	}
 
 }
