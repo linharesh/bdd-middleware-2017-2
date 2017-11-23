@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.Set;
 
-import Entidade.Entidade;
+import entidade.Entidade;
 import dbconnection.MySQLConnection;
 import dbconnection.ProcessadorDeConsulta;
 import dbconnection.Site;

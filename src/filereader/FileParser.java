@@ -2,7 +2,7 @@ package filereader;
 
 import java.util.ArrayList;
 
-import Entidade.Entidade;
+import entidade.Entidade;
 import dbconnection.Site;
 
 public abstract class FileParser {

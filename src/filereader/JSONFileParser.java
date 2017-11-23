@@ -7,8 +7,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import Entidade.Entidade;
-import Entidade.Fragmento;
+import entidade.Entidade;
+import entidade.Fragmento;
 import dbconnection.Site;
 
 public class JSONFileParser extends FileParser {

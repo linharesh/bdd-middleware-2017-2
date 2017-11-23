@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-import Entidade.Entidade;
-import Entidade.Fragmento;
+import entidade.Entidade;
+import entidade.Fragmento;
 
 public class ProcessadorDeConsulta {
 
@@ -74,7 +74,6 @@ public class ProcessadorDeConsulta {
 			}
 
 			for (String nomeEntidade : nomeDasEntidades) {
-				System.out.println("buscando por:"+nomeEntidade);
 				entidadesArrL.add(buscaEntidadePorNome(nomeEntidade));
 			}
 			return entidadesArrL;

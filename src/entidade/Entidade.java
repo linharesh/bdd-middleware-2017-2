@@ -1,4 +1,4 @@
-package Entidade;
+package entidade;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Entidade {
 			if (f.getSiteid().equalsIgnoreCase(siteid))
 				return f;
 		}
-		throw new Exception("SiteID não encontrado: "+siteid);
+		throw new Exception("SiteID nï¿½o encontrado: "+siteid);
 	}
 
 	public String getNome() {
