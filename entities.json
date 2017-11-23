@@ -19,24 +19,6 @@
         },
 
         {
-            "name":"Disciplina",
-            "fragments": [
-                {
-                    "name": "DISCIPLINA1",
-                    "site-id": "SITE-01"
-                },
-                {
-                    "name": "DISCIPLINA2",
-                    "site-id": "SITE-02"
-                },
-                {
-                    "name": "DISCIPLINA3",
-                    "site-id": "SITE-03"
-                }
-            ]
-        }, 
-
-        {
             "name":"Inscricao",
             "fragments": [
                 {

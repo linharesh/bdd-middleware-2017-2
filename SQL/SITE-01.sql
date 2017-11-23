@@ -1,3 +1,4 @@
+
 -- -----------------------------------------------------
 -- SITE-01
 -- -----------------------------------------------------
@@ -24,34 +25,19 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SITE-01`.`DISCIPLINA1`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SITE-01`.`DISCIPLINA1` (
-  `ID` INT NOT NULL,
-  `CARGA_HORARIA` VARCHAR(45) NOT NULL,
-  `NOME` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `SITE-01`.`INSCRICAO1`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SITE-01`.`INSCRICAO1` (
   `ID_ALN` INT NOT NULL,
   `ID_DSCPLN` INT NOT NULL,
-  `DATA` DATETIME NOT NULL,
-  PRIMARY KEY (`ID_ALN`, `ID_DSCPLN`, `DATA`),
-  INDEX `fk_DisciplinaCursada_ID_ALNx` (`ID_ALN` ASC),
-  INDEX `fk_Inscricao_Disciplina1_idx` (`ID_DSCPLN` ASC),
-  CONSTRAINT `fk_DisciplinaCursada_Aluno`
+  `PERIODO` VARCHAR(15) NOT NULL,
+  `TURMA` VARCHAR(10) NOT NULL,
+  `NOTA_FINAL` FLOAT NULL,
+  PRIMARY KEY (`ID_ALN`, `ID_DSCPLN`, `PERIODO`),
+  INDEX `fk_Inscricao_Aluno_idx` (`ID_ALN` ASC),
+  CONSTRAINT `fk_Inscricao_Aluno`
     FOREIGN KEY (`ID_ALN`)
     REFERENCES `SITE-01`.`ALUNO1` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Inscricao_Disciplina1`
-    FOREIGN KEY (`ID_DSCPLN`)
-    REFERENCES `SITE-01`.`DISCIPLINA1` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -66,14 +52,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- INSERTS
 -- -----------------------------------------------------
 
-INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (1, 1, "Dimas Njord", 17, "RJ", 7.24);
-INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (2, 2, "Ruby Stewart", 15, "RJ", 9.01);
-INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (3, 3, "Stephen Salter", 27, "RJ", 8.49);
+INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (1, 10821301, "Dimas Njord", 17, "RJ", 7.24);
+INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (2, 10821302, "Ruby Stewart", 15, "RJ", 9.01);
+INSERT INTO `SITE-01`.`ALUNO1` (`ID`, `MATRICULA`, `NOME`, `IDADE`, `ESTADO`, `CR`) VALUES (3, 10821303, "Stephen Salter", 27, "RJ", 8.49);
 
-INSERT INTO `SITE-01`.`DISCIPLINA1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (100, '120', 'Estrutura de Dados');
-INSERT INTO `SITE-01`.`DISCIPLINA1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (200, '200', 'Algoritmos em C');
-INSERT INTO `SITE-01`.`DISCIPLINA1` (`ID`, `CARGA_HORARIA`, `NOME`) VALUES (300, '175', 'Banco de dados Distribuidos');
-
-INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (1, 100, '2006-12-17');
-INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (2, 200, '2008-06-05');
-INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `DATA`) VALUES (3, 300, '2005-12-15');
+INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `PERIODO`, `TURMA`, `NOTA_FINAL`) VALUES (1, 101, "2006-1", "B2", 7.55);
+INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `PERIODO`, `TURMA`, `NOTA_FINAL`) VALUES (2, 201, "2007-01", "A7", 5.55);
+INSERT INTO `SITE-01`.`INSCRICAO1` (`ID_ALN`, `ID_DSCPLN`, `PERIODO`, `TURMA`, `NOTA_FINAL`) VALUES (3, 403, "2012-02", "C1", 9.94);
